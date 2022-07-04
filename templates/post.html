@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row border mt-4 p-3 mypost" >
+            <div class="col col-2">
+                <div class="image pe-2"> <img src="{{ url_for('static', filename='photos_profile/{}'.format(post.author.profile_picture)) }}" class="rounded img-fluid img-thumbnail" width="200"> </div>
+                <strong> {{ post.author.username }} </strong>
+                <div class="row"><!--justify-content-center">-->
+                    <div class="col"><!-- style="text-align-center">-->
+                        <!--<strong>Courses:</strong><br>-->
+                        {% for course in post.author.courses.split(';') %}
+                            <button type="button" class="btn btn-success mt-2" disabled>{{ course }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col col-9">
+                <h3>
+                    {{ post.title }}
+                    <small class="text-muted" style="font-size: 15px">
+                        {{ post.creation_date.strftime("%m/%d/%Y, %H:%M:%S") }}
+                        {% if form %}
+                            <a href="#form_post_edit">Edit</a>
+                            <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Delete
+                            </a>
+                        {% endif %}
+                    </small>
+                </h3>
+                <p> {{ post.body }} </p>
+            </div>
+        </div>
+    </div>
+{% if form %}
+<div class="container">
+        <div class="row" >
+            <div class="col">
+                <form method="POST" action="" id="form_post_edit" class="border mt-2 p-4">
+                    {{ form.csrf_token }}
+                    <legend>Edit the post</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                         <div class="form-group">
+                            {{ form.body.label(class="form-control-label") }}
+                            {% if form.body.errors %}
+                                {{ form.body(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.body.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.body(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    {{ form.submit_button(class="btn btn-outline-primary mt-2") }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure do you want to delete this post?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form method="POST" action="{{ url_for('delete_post', post_id=post.id)}}">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

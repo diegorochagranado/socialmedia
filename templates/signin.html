@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <hr>
+        <div class="row" >
+            <div class="popup">
+                <div class="close-btn">&times;</div>
+                <form method="POST" action="" class="form">
+                    {{ form_signin.csrf_token }}
+                    <h2>Sign in</h2>
+                    <fieldset>
+                        <div class="form-element">
+                            {{ form_signin.email.label(class="form-label") }}
+                            {% if form_signin.email.errors %}
+                                {{ form_signin.email(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signin.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signin.email(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-element">
+                            {{ form_signin.password.label(class="form-label") }}
+                            {% if form_signin.password.errors %}
+                                {{ form_signin.password(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signin.password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signin.password(class="form-control") }}
+                            {% endif %}
+                         </div>
+                        <div class="form-element">
+                            {{ form_signin.keep_logged(class="form-label") }}
+                            {{ form_signin.keep_logged.label(class="form-label") }}
+                        </div>
+                    </fieldset>
+                    {{ form_signin.button_submit_signin(class="button") }}
+                </form>
+            </div>
+            <div class="popup-signup">
+                <div class="close-btn">&times;</div>
+                <form method="POST" action="" class="form">
+                    {{form_signup.csrf_token}}
+                    <h2>Sign up</h2>
+                        <div class="form-element">
+                            {{ form_signup.username.label(class="form-label") }}
+                            {% if form_signup.email.errors %}
+                                {{ form_signup.username(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signup.username.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signup.username(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-element">
+                            {{ form_signup.email.label(class="form-label") }}
+                            {% if form_signup.email.errors %}
+                                {{ form_signup.email(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signup.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signup.email(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-element">
+                            {{ form_signup.password.label(class="form-label") }}
+                            {% if form_signup.password.errors %}
+                                {{ form_signup.password(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signup.password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signup.password(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-element">
+                            {{ form_signup.confirmation.label(class="form-label") }}
+                            {% if form_signup.confirmation.errors %}
+                                {{ form_signup.confirmation(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_signup.confirmation.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_signup.confirmation(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    {{ form_signup.button_submit_signup(class="button") }}
+                </form>
+            </div>
+        </div>
+    </div>
+<script src="{{url_for('static', filename='index.js')}}"></script>
+{% endblock %}

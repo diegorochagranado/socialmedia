@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   <div class="container">
+        <div class="row" >
+            <div class="col">
+                <form method="POST" action="" class="border mt-2 p-4">
+                    {{ form.csrf_token }}
+                    <legend>Write a post</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                         <div class="form-group">
+                            {{ form.body.label(class="form-control-label") }}
+                            {% if form.body.errors %}
+                                {{ form.body(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.body.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.body(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    {{ form.submit_button(class="btn btn-primary mt-2") }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+<h2>Popup Form</h2>
+<p>Click on the button at the bottom of this page to open the login form.</p>
+<p>Note that the button and the form is fixed - they will always be positioned to the bottom of the browser window.</p>
+
+<button class="open-button" onclick="openForm()">Open Form</button>
+
+<div class="form-popup" id="myForm">
+    <form method="POST" action="" class="border mt-2 p-4">
+                    {{ form.csrf_token }}
+                    <legend>Write a post</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                         <div class="form-group">
+                            {{ form.body.label(class="form-control-label") }}
+                            {% if form.body.errors %}
+                                {{ form.body(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.body.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.body(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    {{ form.submit_button(class="btn btn-primary") }}
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script src="{{url_for('static', filename='index.js')}}"></script>
+
+
+{% endblock %}
